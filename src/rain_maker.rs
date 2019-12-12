@@ -10,39 +10,35 @@ use std::f32::consts::E;
 use std::f32;
 use std::collections::HashMap;
 use ggez::graphics::spritebatch::SpriteBatch;
+use std::cmp::{min, max};
 
 pub struct RainMaker {
     rng: ThreadRng,
 
-    drops: Vec<RDrop>,
+    drops: HashMap<i8, Vec<RDrop>>,
 }
 
 impl EventHandler for RainMaker {
     fn update(&mut self, ctx: &mut Context) -> GameResult<()> {
-        for drop in &mut self.drops {
-            drop.fall()
+        for (_, drops) in &mut self.drops {
+            for d in drops {
+                d.fall()
+            }
         }
         Ok(())
     }
 
     fn draw(&mut self, ctx: &mut Context) -> GameResult<()> {
-        clear(ctx, WHITE);
+        clear(ctx, BLACK);
 
-        let mut map = HashMap::new();
-
-        for &d in &self.drops {
-            map.entry(d.z).or_insert(vec![]).push(d)
-        }
-
-        for (z, drops) in map {
-
+        for (z, drops) in &self.drops {
             let mut builder = MeshBuilder::new();
             for d in drops {
                 let (w, h) = d.get_wh();
                 builder.rectangle(
                     DrawMode::Fill(FillOptions::DEFAULT),
                     Rect { x: d.x, y: d.y, w, h },
-                    BLACK,
+                    WHITE,
                 );
             }
 
@@ -55,17 +51,21 @@ impl EventHandler for RainMaker {
 }
 
 impl RainMaker {
-    pub fn new() -> Self {
+    // drops are evenly spread across layers
+    pub fn new(layers: u8, n_drops: usize) -> Self {
+        let drops_per_layer = max(1, n_drops / layers as usize);
+
+        let mut rng = thread_rng();
+        let drops = (0..layers).map(|u| u as i8)
+            .map(|l| {
+                let ds = (0..drops_per_layer)
+                    .map(|_| RDrop::new(&mut rng))
+                    .collect();
+                (l, ds)
+            }).collect();
         Self {
-            rng: thread_rng(),
-
-            drops: vec![],
-        }
-    }
-
-    pub fn generate(&mut self) {
-        for _ in 0..10000 {
-            self.drops.push(RDrop::new(&mut self.rng));
+            rng,
+            drops,
         }
     }
 
