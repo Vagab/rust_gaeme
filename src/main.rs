@@ -1,10 +1,10 @@
 mod r_drop;
-mod event_handler;
+mod rain_maker;
 
-use event_handler::RainMaker;
+use rain_maker::RainMaker;
 
-const WIDTH: f32 = 200.;
-const HEIGHT: f32 = 100.;
+const WIDTH: f32 = 1000.;
+const HEIGHT: f32 = 700.;
 
 fn main() {
     let mut rain_maker = RainMaker::new();

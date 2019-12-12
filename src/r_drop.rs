@@ -11,7 +11,7 @@ pub struct RDrop {
 impl RDrop {
 
     fn new(r: &mut ThreadRng) -> Self{
-        let r = &mut  rand.thread_rng();
+        let r = &mut rand::thread_rng();
 
         Self {
             x: r.gen_range(0., WIDTH),
