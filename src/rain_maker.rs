@@ -5,26 +5,33 @@ use ggez::conf::{Conf, WindowMode, FullscreenType};
 use crate::{WIDTH, HEIGHT};
 use rand::rngs::ThreadRng;
 use rand::thread_rng;
+use crate::r_drop::RDrop;
 
 pub struct RainMaker {
     rng: ThreadRng,
 
+    drops: Vec<RDrop>,
 }
 
 impl EventHandler for RainMaker {
     fn update(&mut self, ctx: &mut Context) -> GameResult<()> {
-        // make it rain
+        for drop in &mut self.drops {
+            drop.fall()
+        }
         Ok(())
     }
 
     fn draw(&mut self, ctx: &mut Context) -> GameResult<()> {
         clear(ctx, WHITE);
+
+        let drops = self.drops.iter()
+            .map(|&RDrop { x, y, z}| {
+
+            });
+
         let mut  x = 0.;
         let mut y = 0.;
         let z = 0u8;
-
-        let center_x = WIDTH / 2.;
-        let center_y = HEIGHT / 2.;
 
 //        x =
 
@@ -47,6 +54,8 @@ impl RainMaker {
     pub fn new() -> Self {
         Self {
             rng: thread_rng(),
+
+            drops: vec![],
         }
     }
 
