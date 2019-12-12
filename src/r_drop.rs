@@ -2,6 +2,7 @@ extern crate rand;
 use rand::{thread_rng, prelude::ThreadRng, Rng, distributions::{Normal, Distribution}};
 use crate::{WIDTH, HEIGHT, STEP};
 
+#[derive(Copy, Clone)]
 pub struct RDrop {
     pub x: f32,
     pub y: f32,
