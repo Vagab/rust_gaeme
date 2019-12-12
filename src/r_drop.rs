@@ -10,7 +10,7 @@ pub struct RDrop {
 
 impl RDrop {
 
-    pub fn new(r: &mut ThreadRng) -> Self {
+    fn new(r: &mut ThreadRng) -> Self {
         Self {
             x: r.gen_range(0., WIDTH),
             y: r.gen_range(0., HEIGHT),
@@ -18,7 +18,7 @@ impl RDrop {
         }
     }
 
-    pub fn fall(&mut self) {
+    fn fall(&mut self) {
         self.y += STEP / self.z as f32;
     }
 }
