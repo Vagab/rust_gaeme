@@ -64,7 +64,7 @@ impl RainMaker {
     }
 
     pub fn generate(&mut self) {
-        for _ in 0..10000 {
+        for _ in 0..5000 {
             self.drops.push(RDrop::new(&mut self.rng));
         }
     }
