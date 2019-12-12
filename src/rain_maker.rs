@@ -35,13 +35,13 @@ impl EventHandler for RainMaker {
         }
 
         for (z, drops) in map {
-            let coeff = 10. * 2f32.powf(-z as f32).powf(0.5);
 
             let mut builder = MeshBuilder::new();
-            for RDrop { x, y, .. } in drops {
+            for d in drops {
+                let (w, h) = d.get_wh();
                 builder.rectangle(
                     DrawMode::Fill(FillOptions::DEFAULT),
-                    Rect { x, y, w: 0.5 * coeff, h: 5. * coeff },
+                    Rect { x: d.x, y: d.y, w, h },
                     BLACK,
                 );
             }
@@ -64,7 +64,7 @@ impl RainMaker {
     }
 
     pub fn generate(&mut self) {
-        for _ in 0..1000 {
+        for _ in 0..10000 {
             self.drops.push(RDrop::new(&mut self.rng));
         }
     }
