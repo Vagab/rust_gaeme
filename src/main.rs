@@ -12,7 +12,6 @@ const HEIGHT: f32 = 800.;
 const STEP: f32 = 7.;
 
 fn main() {
-    let mut rain_maker = RainMaker::new();
-    rain_maker.generate();
+    let mut rain_maker = RainMaker::new(10, 10_000);
     rain_maker.run();
 }
