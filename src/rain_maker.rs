@@ -6,6 +6,8 @@ use crate::{WIDTH, HEIGHT};
 use rand::rngs::ThreadRng;
 use rand::thread_rng;
 use crate::r_drop::RDrop;
+use std::f32::consts::E;
+use std::f32;
 
 pub struct RainMaker {
     rng: ThreadRng,
@@ -24,28 +26,18 @@ impl EventHandler for RainMaker {
     fn draw(&mut self, ctx: &mut Context) -> GameResult<()> {
         clear(ctx, WHITE);
 
-        let drops = self.drops.iter()
+        for (x, y, z) in self.drops.iter()
             .map(|&RDrop { x, y, z}| {
-
-            });
-
-        let mut  x = 0.;
-        let mut y = 0.;
-        let z = 0u8;
-
-//        x =
-
-        let w = 10.;
-        let h = 100.;
-
-        let mesh = Mesh::new_rectangle(
-            ctx,
-            DrawMode::Fill(FillOptions::DEFAULT),
-            Rect { x, y, w, h },
-            BLACK,
-        )?;
-
-        draw(ctx, &mesh, DrawParam::default());
+                (x, y, z)
+            }) {
+            let mesh = Mesh::new_rectangle(
+                ctx,
+                DrawMode::Fill(FillOptions::DEFAULT),
+                Rect { x, y, w: 0.5 * 10. * 2f32.powf(-z as f32).powf(0.5), h: 5. * 10. * 2f32.powf(-z as f32).powf(0.5) },
+                BLACK,
+            )?;
+            draw(ctx, &mesh, DrawParam::default());
+        }
         present(ctx)
     }
 }
@@ -56,6 +48,12 @@ impl RainMaker {
             rng: thread_rng(),
 
             drops: vec![],
+        }
+    }
+
+    pub fn generate(&mut self) {
+        for _ in 0..10000 {
+            self.drops.push(RDrop::new(&mut self.rng));
         }
     }
 
@@ -77,6 +75,7 @@ impl RainMaker {
                 })
                 .build()
                 .unwrap();
+
 
         run(ctx, event_loop, self)
     }

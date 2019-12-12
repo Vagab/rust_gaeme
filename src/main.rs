@@ -13,5 +13,6 @@ const STEP: f32 = 1e-5;
 
 fn main() {
     let mut rain_maker = RainMaker::new();
+    rain_maker.generate();
     rain_maker.run();
 }
