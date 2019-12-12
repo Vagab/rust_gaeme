@@ -3,7 +3,6 @@ extern crate rand;
 use rand::{thread_rng, prelude::ThreadRng, Rng, distributions::{Normal, Distribution}};
 use crate::{WIDTH, HEIGHT, STEP};
 use std::cmp::min;
-use float_ord::FloatOrd;
 
 const RD_WIDTH: f32 = 0.2;
 const RD_HEIGHT: f32 = 5.;
