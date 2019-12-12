@@ -33,7 +33,11 @@ impl EventHandler for RainMaker {
             let mesh = Mesh::new_rectangle(
                 ctx,
                 DrawMode::Fill(FillOptions::DEFAULT),
-                Rect { x, y, w: 0.5 * 10. * 2f32.powf(-z as f32).powf(0.5), h: 5. * 10. * 2f32.powf(-z as f32).powf(0.5) },
+                Rect { x,
+                    y,
+                    w: 0.5 * 10. * 2f32.powf(-z as f32).powf(0.5),
+                    h: 5. * 10. * 2f32.powf(-z as f32).powf(0.5)
+                },
                 BLACK,
             )?;
             draw(ctx, &mesh, DrawParam::default());
@@ -52,7 +56,7 @@ impl RainMaker {
     }
 
     pub fn generate(&mut self) {
-        for _ in 0..10000 {
+        for _ in 0..1000 {
             self.drops.push(RDrop::new(&mut self.rng));
         }
     }
@@ -75,8 +79,6 @@ impl RainMaker {
                 })
                 .build()
                 .unwrap();
-
-
         run(ctx, event_loop, self)
     }
 }

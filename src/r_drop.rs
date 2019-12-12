@@ -13,12 +13,15 @@ impl RDrop {
     pub fn new(r: &mut ThreadRng) -> Self {
         Self {
             x: r.gen_range(0., WIDTH),
-            y: r.gen_range(0., HEIGHT),
-            z: r.gen_range(0, 20),
+            y: r.gen_range(-200., HEIGHT),
+            z: r.gen_range(0, 6),
         }
     }
 
     pub fn fall(&mut self) {
         self.y += STEP / self.z as f32;
+        if self.y > WIDTH {
+            self.y = -200.;
+        }
     }
 }
