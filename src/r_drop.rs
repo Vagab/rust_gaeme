@@ -1,12 +1,8 @@
 extern crate rand;
-extern crate float_ord;
-
 use rand::{thread_rng, prelude::ThreadRng, Rng, distributions::{Normal, Distribution}};
 use crate::{WIDTH, HEIGHT, STEP};
-use std::cmp::min;
-use float_ord::FloatOrd;
 
-const RD_WIDTH: f32 = 0.2;
+const RD_WIDTH: f32 = 0.5;
 const RD_HEIGHT: f32 = 5.;
 
 #[derive(Copy, Clone)]
@@ -22,8 +18,8 @@ impl RDrop {
         Self {
             x: r.gen_range(0., WIDTH),
             y: r.gen_range(-200., HEIGHT),
-            z: r.gen_range(1, 6), // shouldn't be 0
-            v: r.gen_range(0.1, 1.),
+            z: r.gen_range(1, 6),
+            v: r.gen_range(1., 5.),
         }
     }
 
@@ -33,7 +29,7 @@ impl RDrop {
     }
 
     pub fn fall(&mut self) {
-        self.y += STEP / self.z as f32;
+        self.y += self.v * STEP/ (self.z as f32).powf(0.5);
         if self.y > HEIGHT {
             self.y = -self.get_wh().1;
         }
