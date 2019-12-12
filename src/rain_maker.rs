@@ -26,10 +26,7 @@ impl EventHandler for RainMaker {
     fn draw(&mut self, ctx: &mut Context) -> GameResult<()> {
         clear(ctx, WHITE);
 
-        for (x, y, z) in self.drops.iter()
-            .map(|&RDrop { x, y, z}| {
-                (x, y, z)
-            }) {
+        for &RDrop { x, y, z } in &self.drops {
             let mesh = Mesh::new_rectangle(
                 ctx,
                 DrawMode::Fill(FillOptions::DEFAULT),
@@ -56,7 +53,7 @@ impl RainMaker {
     }
 
     pub fn generate(&mut self) {
-        for _ in 0..1000 {
+        for _ in 0..500 {
             self.drops.push(RDrop::new(&mut self.rng));
         }
     }

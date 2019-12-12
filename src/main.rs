@@ -9,7 +9,7 @@ use rain_maker::RainMaker;
 
 const WIDTH: f32 = 1200.;
 const HEIGHT: f32 = 800.;
-const STEP: f32 = 10.;
+const STEP: f32 = 100.;
 
 fn main() {
     let mut rain_maker = RainMaker::new();
