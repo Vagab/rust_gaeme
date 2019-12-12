@@ -10,7 +10,7 @@ pub struct RDrop {
 
 impl RDrop {
 
-    fn new(r: &mut ThreadRng) -> Self{
+    fn new(r: &mut ThreadRng) -> Self {
         let r = &mut rand::thread_rng();
 
         Self {
@@ -20,7 +20,7 @@ impl RDrop {
         }
     }
 
-    pub(crate) fn fall(&mut self) {
-        self.y += STEP * 1. / self.z as f32;
+    fn fall(&mut self) {
+        self.y += STEP / self.z as f32;
     }
 }
