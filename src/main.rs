@@ -1,6 +1,7 @@
-use event_handler::RainMaker;
-
+mod r_drop;
 mod event_handler;
+
+use event_handler::RainMaker;
 
 const WIDTH: f32 = 200.;
 const HEIGHT: f32 = 100.;
