@@ -1,6 +1,6 @@
 extern crate rand;
 use rand::{thread_rng, prelude::ThreadRng, Rng, distributions::{Normal, Distribution}};
-use crate::{WIDTH, HEIGHT};
+use crate::{WIDTH, HEIGHT, STEP};
 
 pub struct RDrop {
     pub x: f32,
@@ -10,13 +10,15 @@ pub struct RDrop {
 
 impl RDrop {
 
-    fn new(r: &mut ThreadRng) -> Self{
-        let r = &mut  rand.thread_rng();
-
+    fn new(r: &mut ThreadRng) -> Self {
         Self {
             x: r.gen_range(0., WIDTH),
             y: r.gen_range(0., HEIGHT),
             z: r.gen(),
         }
+    }
+
+    fn fall(&mut self) {
+        self.y += STEP * 1. / self.z as f32;
     }
 }
