@@ -1,27 +1,62 @@
 use ggez::event::{EventHandler, run};
 use ggez::{Context, GameResult, ContextBuilder};
-use ggez::graphics::{clear, present, WHITE};
+use ggez::graphics::{clear, present, WHITE, Mesh, DrawMode, FillOptions, Rect, BLACK, draw, DrawParam};
 use ggez::conf::{Conf, WindowMode, FullscreenType};
 use crate::{WIDTH, HEIGHT};
+use rand::rngs::ThreadRng;
+use rand::thread_rng;
+use crate::r_drop::RDrop;
 
-pub struct RainMaker; // add rain
+pub struct RainMaker {
+    rng: ThreadRng,
+
+    drops: Vec<RDrop>,
+}
 
 impl EventHandler for RainMaker {
     fn update(&mut self, ctx: &mut Context) -> GameResult<()> {
-        // make it rain
+        for drop in &mut self.drops {
+            drop.fall()
+        }
         Ok(())
     }
 
     fn draw(&mut self, ctx: &mut Context) -> GameResult<()> {
         clear(ctx, WHITE);
-        // draw shit
+
+        let drops = self.drops.iter()
+            .map(|&RDrop { x, y, z}| {
+
+            });
+
+        let mut  x = 0.;
+        let mut y = 0.;
+        let z = 0u8;
+
+//        x =
+
+        let w = 10.;
+        let h = 100.;
+
+        let mesh = Mesh::new_rectangle(
+            ctx,
+            DrawMode::Fill(FillOptions::DEFAULT),
+            Rect { x, y, w, h },
+            BLACK,
+        )?;
+
+        draw(ctx, &mesh, DrawParam::default());
         present(ctx)
     }
 }
 
 impl RainMaker {
     pub fn new() -> Self {
-        Self
+        Self {
+            rng: thread_rng(),
+
+            drops: vec![],
+        }
     }
 
     pub fn run(&mut self) -> GameResult<()> {

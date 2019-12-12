@@ -1,7 +1,11 @@
-mod r_drop;
-mod event_handler;
+#[macro_use] extern crate derive_deref;
+#[macro_use] extern crate derive_more;
 
-use event_handler::RainMaker;
+mod r_drop;
+mod rain_maker;
+mod f_point;
+
+use rain_maker::RainMaker;
 
 const WIDTH: f32 = 1200.;
 const HEIGHT: f32 = 800.;
