@@ -1,19 +1,19 @@
 use crate::gravity_affected::GravityAffected;
+use crate::{WIDTH, HEIGHT};
 
+
+#[derive(Copy, Clone)]
 pub struct Character {
-    pub x: f32;
-    pub y: f32;
+    pub x: f32,
+    pub y: f32,
 }
 
 impl GravityAffected for Character {
     fn fall(&mut self, step: f32) {
-
-        self.y += step;
-        if self.y > HEIGHT {
-            step = 0;
-        } else if self.y < y_start {
-            step = 0;
+        if self.y > HEIGHT || self.y < 0. {
+            return
         }
+        self.y += step;
     }
 }
 
@@ -21,8 +21,8 @@ impl Character {
 
     pub fn new() -> Self {
         Self {
-            x: WIDTH/2.;
-            y: HEIGHT/2.;
+            x: 100f32,
+            y: HEIGHT/2.,
         }
     }
 
