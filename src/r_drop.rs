@@ -1,7 +1,7 @@
 extern crate rand;
 
 use rand::{thread_rng, prelude::ThreadRng, Rng, distributions::{Normal, Distribution}};
-use crate::{WIDTH, HEIGHT, STEP};
+use crate::{WIDTH, HEIGHT};
 use std::cmp::min;
 
 const RD_WIDTH: f32 = 0.2;
@@ -11,7 +11,7 @@ const RD_HEIGHT: f32 = 5.;
 pub struct RDrop {
     pub x: f32,
     pub y: f32,
-    pub z: i8,
+    pub z: f32,
 }
 
 impl RDrop {
@@ -19,7 +19,7 @@ impl RDrop {
         Self {
             x: r.gen_range(0., WIDTH),
             y: r.gen_range(-200., HEIGHT),
-            z: r.gen_range(1, 6), // shouldn't be 0
+            z: r.gen_range::<_, f32, f32>(1., 10.).powf(0.5), // shouldn't be 0
         }
     }
 
@@ -28,10 +28,14 @@ impl RDrop {
         (RD_WIDTH * coeff, RD_HEIGHT * coeff)
     }
 
-    pub fn fall(&mut self) {
-        self.y += STEP / self.z as f32;
+    pub fn fall(&mut self, step: f32) {
+        let y_start = -self.get_wh().1; // the starting y position off screen
+
+        self.y += step / self.z as f32;
         if self.y > HEIGHT {
-            self.y = -self.get_wh().1;
+            self.y = y_start
+        } else if self.y < y_start {
+            self.y = HEIGHT
         }
     }
 }
