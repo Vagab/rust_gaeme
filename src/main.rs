@@ -1,19 +1,43 @@
 #[macro_use] extern crate derive_deref;
 #[macro_use] extern crate derive_more;
 
-mod r_drop;
-mod rain_maker;
-mod f_point;
-mod gravity_affected;
-mod character;
+mod backgrounds;
+mod vector_point;
+mod game;
 
-use rain_maker::RainMaker;
+use backgrounds::rain_maker::RainMaker;
+use ggez::event::run;
+use ggez::conf::{WindowMode, FullscreenType};
+use ggez::{ContextBuilder, conf};
+use crate::game::Game;
 
 const WIDTH: f32 = 1500.;
 const HEIGHT: f32 = 900.;
 //const STEP: f32 = 7.;
 
 fn main() {
-    let mut rain_maker = RainMaker::new(10000);
-    rain_maker.run().expect("something went wrong");
+    let wm = WindowMode {
+        width: WIDTH,
+        height: HEIGHT,
+        maximized: false,
+        fullscreen_type: FullscreenType::Windowed,
+        borderless: false,
+        min_width: 0.,
+        min_height: 0.,
+        max_width: 0.,
+        max_height: 0.,
+        resizable: false
+    };
+    let (ref mut ctx, ref mut event_loop)
+        = ContextBuilder::new("game", "author")
+        .conf(conf::Conf::new())
+        .window_mode(wm)
+        .build()
+        .unwrap();
+
+
+    let mut game = Game {
+        background: RainMaker::new(10000),
+    };
+    run(ctx, event_loop, &mut game).expect("crashed");
 }

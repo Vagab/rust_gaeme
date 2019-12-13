@@ -1,3 +1,6 @@
+mod r_drop;
+
+use r_drop::RDrop;
 use ggez::event::{EventHandler, run, KeyMods};
 use ggez::{Context, GameResult, ContextBuilder};
 use ggez::graphics::{clear, present, WHITE, Mesh, DrawMode, FillOptions, Rect, BLACK, draw, DrawParam, MeshBuilder, BlendMode, Drawable, Color};
@@ -5,15 +8,14 @@ use ggez::conf::{Conf, WindowMode, FullscreenType};
 use crate::{WIDTH, HEIGHT};
 use rand::rngs::ThreadRng;
 use rand::thread_rng;
-use crate::r_drop::RDrop;
 use std::f32::consts::E;
 use std::f32;
 use std::collections::HashMap;
 use ggez::graphics::spritebatch::SpriteBatch;
 use std::cmp::{min, max};
 use ggez::input::keyboard::KeyCode;
-use crate::gravity_affected::GravityAffected;
-use crate::character::Character;
+use crate::game::character::Character;
+use crate::game::character::gravity_affected::GravityAffected;
 
 pub struct RainMaker {
     rng: ThreadRng,
@@ -70,29 +72,8 @@ impl RainMaker {
         Self {
             rng,
             drops,
-            ch,
+            ch: Character::new(),
             step: 10.,
         }
-    }
-
-    pub fn run(&mut self) -> GameResult<()> {
-        let (ref mut ctx, ref mut event_loop)
-            = ContextBuilder::new("gæme", "")
-                .conf(Conf::new())
-                .window_mode(WindowMode {
-                    width: WIDTH,
-                    height: HEIGHT,
-                    maximized: false,
-                    fullscreen_type: FullscreenType::Windowed,
-                    borderless: false,
-                    min_width: 0.,
-                    min_height: 0.,
-                    max_width: 0.,
-                    max_height: 0.,
-                    resizable: false
-                })
-                .build()
-                .unwrap();
-        run(ctx, event_loop, self)
     }
 }
