@@ -4,6 +4,8 @@
 mod r_drop;
 mod rain_maker;
 mod f_point;
+mod gravity_affected;
+mod character;
 
 use rain_maker::RainMaker;
 

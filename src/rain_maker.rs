@@ -12,11 +12,14 @@ use std::collections::HashMap;
 use ggez::graphics::spritebatch::SpriteBatch;
 use std::cmp::{min, max};
 use ggez::input::keyboard::KeyCode;
+use crate::gravity_affected::GravityAffected;
+use crate::character::Character;
 
 pub struct RainMaker {
     rng: ThreadRng,
 
     drops: Vec<RDrop>,
+    ch: Character,
     step: f32,
 }
 
@@ -37,7 +40,7 @@ impl EventHandler for RainMaker {
             builder.rectangle(
                 DrawMode::Fill(FillOptions::DEFAULT),
                 Rect { x: d.x, y: d.y, w, h },
-                Color::new(1., 1., 1., 0.1),
+                Color::new(1., 1., 1., 0.05),
             );
         }
 
@@ -67,6 +70,7 @@ impl RainMaker {
         Self {
             rng,
             drops,
+            ch,
             step: 10.,
         }
     }
