@@ -1,9 +1,9 @@
 extern crate rand;
 
-use rand::{thread_rng, prelude::ThreadRng, Rng, distributions::{Normal, Distribution}};
-use crate::{WIDTH, HEIGHT};
-use std::cmp::min;
-use crate::gravity_affected::GravityAffected;
+use crate::{HEIGHT, WIDTH};
+use self::rand::rngs::ThreadRng;
+use self::rand::Rng;
+use crate::game::character::gravity_affected::GravityAffected;
 
 const RD_WIDTH: f32 = 0.2;
 const RD_HEIGHT: f32 = 5.;
@@ -16,7 +16,6 @@ pub struct RDrop {
 }
 
 impl GravityAffected for RDrop {
-
     fn fall(&mut self, step: f32) {
         let y_start = -self.get_wh().1; // the starting y position off screen
 
