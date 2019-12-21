@@ -1,20 +1,13 @@
 mod r_drop;
 
 use r_drop::RDrop;
-use ggez::event::{EventHandler, run, KeyMods};
-use ggez::{Context, GameResult, ContextBuilder};
-use ggez::graphics::{clear, present, WHITE, Mesh, DrawMode, FillOptions, Rect, BLACK, draw, DrawParam, MeshBuilder, BlendMode, Drawable, Color};
-use ggez::conf::{Conf, WindowMode, FullscreenType};
-use crate::{WIDTH, HEIGHT};
+use ggez::event::{EventHandler, KeyMods};
+use ggez::{Context, GameResult};
+use ggez::graphics::{clear, present, DrawMode, FillOptions, Rect, BLACK, draw, DrawParam, MeshBuilder, Color};
 use rand::rngs::ThreadRng;
 use rand::thread_rng;
-use std::f32::consts::E;
 use std::f32;
-use std::collections::HashMap;
-use ggez::graphics::spritebatch::SpriteBatch;
-use std::cmp::{min, max};
 use ggez::input::keyboard::KeyCode;
-use crate::game::character::Character;
 use crate::game::character::gravity_affected::GravityAffected;
 
 pub struct RainMaker {
@@ -46,9 +39,7 @@ impl EventHandler for RainMaker {
         }
 
         let mesh = builder.build(ctx)?;
-        draw(ctx, &mesh, DrawParam::default())?;
-
-        present(ctx)
+        draw(ctx, &mesh, DrawParam::default())
     }
 
     fn key_down_event(&mut self, ctx: &mut Context, key: KeyCode, mods: KeyMods, _: bool) {

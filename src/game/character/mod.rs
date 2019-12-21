@@ -9,12 +9,13 @@ use ggez::graphics::DrawMode;
 pub struct Character {
     pub x: f32,
     pub y: f32,
+    pub v: f32,
 }
 
 impl Character {
     pub fn fall(&mut self, step: f32) {
         if self.y > HEIGHT || self.y < 0. { return }
-        self.y += step
+        self.y += step * self.v
     }
 }
 
@@ -23,6 +24,7 @@ impl Character {
         Self {
             x: 100.,
             y: HEIGHT / 2.,
+            v: 0.5,
         }
     }
 }

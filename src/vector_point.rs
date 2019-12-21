@@ -1,5 +1,5 @@
 use mint::Point2;
-use std::ops::{Deref, Range};
+use std::ops::Range;
 use rand::Rng;
 
 pub trait VectorPoint {

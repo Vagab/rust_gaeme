@@ -1,6 +1,3 @@
-#[macro_use] extern crate derive_deref;
-#[macro_use] extern crate derive_more;
-
 mod backgrounds;
 mod vector_point;
 mod game;
