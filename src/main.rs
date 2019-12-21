@@ -10,10 +10,10 @@ use ggez::event::run;
 use ggez::conf::{WindowMode, FullscreenType};
 use ggez::{ContextBuilder, conf};
 use crate::game::Game;
+use crate::game::character::Character;
 
 const WIDTH: f32 = 1500.;
 const HEIGHT: f32 = 900.;
-//const STEP: f32 = 7.;
 
 fn main() {
     let wm = WindowMode {
@@ -37,7 +37,9 @@ fn main() {
 
 
     let mut game = Game {
-        background: RainMaker::new(10000),
+        background: RainMaker::new(1000),
+        character: Character::new(),
+        step: 7.,
     };
     run(ctx, event_loop, &mut game).expect("crashed");
 }

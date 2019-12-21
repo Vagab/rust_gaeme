@@ -21,7 +21,6 @@ pub struct RainMaker {
     rng: ThreadRng,
 
     drops: Vec<RDrop>,
-    ch: Character,
     step: f32,
 }
 
@@ -30,7 +29,6 @@ impl EventHandler for RainMaker {
         for d in &mut self.drops {
             d.fall(self.step)
         }
-        self.ch.fall(self.step / 20f32);
         Ok(())
     }
 
@@ -46,11 +44,6 @@ impl EventHandler for RainMaker {
                 Color::new(1., 1., 1., 0.05),
             );
         }
-        builder.rectangle(
-            DrawMode::Fill(FillOptions::DEFAULT),
-            Rect { x: self.ch.x, y: self.ch.y, w: 100f32, h: 100f32 },
-            Color::new(255., 255., 0., 0.1),
-        );
 
         let mesh = builder.build(ctx)?;
         draw(ctx, &mesh, DrawParam::default())?;
@@ -74,12 +67,10 @@ impl RainMaker {
         let drops = (0..n_drops)
             .map(|_| RDrop::new(&mut rng))
             .collect();
-        let ch = Character::new();
 
         Self {
             rng,
             drops,
-            ch: Character::new(),
             step: 10.,
         }
     }
